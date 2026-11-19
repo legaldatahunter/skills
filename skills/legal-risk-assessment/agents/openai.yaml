@@ -1,0 +1,15 @@
+interface:
+  display_name: "Legal Risk Assessment"
+  short_description: "Score legal risk by severity and likelihood per jurisdiction and flag escalation"
+  default_prompt: "Use $legal-risk-assessment to score the legal risk of this situation per jurisdiction and say when to escalate to counsel."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

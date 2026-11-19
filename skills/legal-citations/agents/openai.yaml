@@ -1,0 +1,15 @@
+interface:
+  display_name: "Legal Citations"
+  short_description: "Cite legal authority inline with verified URLs and a Sources section"
+  default_prompt: "Use $legal-citations to draft this analysis with verified inline citations and a Sources section."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"
