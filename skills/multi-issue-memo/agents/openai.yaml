@@ -1,0 +1,15 @@
+interface:
+  display_name: "Multi-Issue Memo"
+  short_description: "Write a long-form memo resolving each enumerated sub-issue with its own authority"
+  default_prompt: "Use $multi-issue-memo to write a memo that resolves each sub-issue with its controlling statute and leading case."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

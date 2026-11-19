@@ -1,0 +1,15 @@
+interface:
+  display_name: "Cross-Border Comparison"
+  short_description: "Compare how several jurisdictions treat the same legal question"
+  default_prompt: "Use $cross-border-comparison to compare how these jurisdictions treat this question, side by side, with verified citations."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

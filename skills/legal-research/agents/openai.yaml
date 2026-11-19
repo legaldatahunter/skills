@@ -1,0 +1,15 @@
+interface:
+  display_name: "Legal Research"
+  short_description: "Research statutes, case law and doctrine across 230+ jurisdictions with verified citations"
+  default_prompt: "Use $legal-research to research this legal question across the relevant jurisdictions and cite every authority with a verified link."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

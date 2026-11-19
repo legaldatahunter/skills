@@ -1,0 +1,15 @@
+interface:
+  display_name: "Resolve Citation"
+  short_description: "Turn a citation or informal reference into the exact document and verified link"
+  default_prompt: "Use $resolve-citation to resolve this citation to the exact document and give me the official link."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

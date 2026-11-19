@@ -1,0 +1,15 @@
+interface:
+  display_name: "Install Legal Data Hunter"
+  short_description: "Connect your agent to the Legal Data Hunter MCP"
+  default_prompt: "Use $install-legal-data-hunter to install and verify the Legal Data Hunter MCP server."
+
+policy:
+  allow_implicit_invocation: true
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "legal-data-hunter"
+      description: "Legal Data Hunter MCP server"
+      transport: "streamable_http"
+      url: "https://legaldatahunter.com/mcp"

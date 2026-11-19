@@ -1,0 +1,26 @@
+{
+  "name": "legal-data-hunter",
+  "version": "1.0.0",
+  "description": "Legal research skills and the Legal Data Hunter MCP: statutes, case law and official doctrine from 230+ jurisdictions, with every result linked to the official text.",
+  "author": {
+    "name": "Legal Data Hunter",
+    "url": "https://legaldatahunter.com"
+  },
+  "homepage": "https://legaldatahunter.com",
+  "repository": "https://github.com/legaldatahunter/skills",
+  "license": "MIT",
+  "keywords": [
+    "legal",
+    "law",
+    "legal-research",
+    "case-law",
+    "legislation",
+    "citations",
+    "mcp",
+    "gdpr"
+  ],
+  "documentationUrl": "https://legaldatahunter.com/docs",
+  "supportUrl": "https://legaldatahunter.com/support",
+  "privacyPolicyUrl": "https://legaldatahunter.com/privacy",
+  "termsOfServiceUrl": "https://legaldatahunter.com/terms"
+}
