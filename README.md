@@ -14,7 +14,7 @@ Open-source legal research skills for AI agents that use the [Legal Data Hunter]
 | `multi-issue-memo` | Long-form memo that resolves each enumerated sub-issue with its own statute and leading case | `(1) liability of the building's keeper, (2) fault of the victim` |
 | `install-legal-data-hunter` | Installing and verifying the MCP server from inside the agent | `Install Legal Data Hunter` |
 
-Skills load on demand, so you can also just describe the task. As slash commands, Claude Code plugin skills are namespaced: `/legal-data-hunter:legal-research`. In Codex, use `$legal-research`.
+Skills load on demand, so you can also just describe the task. To run one explicitly, use `/legal-research` in Claude Code or `$legal-research` in Codex.
 
 ## Connect the MCP first
 
@@ -30,28 +30,42 @@ Setup instructions for each client are at https://legaldatahunter.com/connect. O
 
 ### Claude Code
 
-Plugin (skills and MCP together):
-
-```bash
-claude plugin install legal-data-hunter --marketplace legaldatahunter/skills
-```
-
-Or in two steps, from a session (`/plugin marketplace add legaldatahunter/skills`, then `/plugin install legal-data-hunter@legaldatahunter`) or the shell:
-
-```bash
-claude plugin marketplace add legaldatahunter/skills
-claude plugin install legal-data-hunter@legaldatahunter
-```
-
-MCP only:
+Add the MCP:
 
 ```bash
 claude mcp add --transport http legal-data-hunter https://legaldatahunter.com/mcp
 ```
 
+Add the skills:
+
+```bash
+npx skills add legaldatahunter/skills -a claude-code
+```
+
+Add `-g` to install them for all your projects instead of the current repo.
+
+To install by hand, clone the repo and copy the skill folders. For your personal skills (all projects):
+
+```bash
+git clone https://github.com/legaldatahunter/skills.git
+mkdir -p ~/.claude/skills
+cp -r skills/skills/* ~/.claude/skills/
+```
+
+For one project only, copy them into that project's `.claude/skills/` instead, run from the project root with the path to wherever you cloned the repo (`mkdir -p .claude/skills && cp -r /path/to/skills/skills/* .claude/skills/`), and commit that folder to share the skills with your team. Each skill ends up at `~/.claude/skills/<skill-name>/SKILL.md` (or `.claude/skills/<skill-name>/SKILL.md`).
+
 ### Claude.ai, Claude desktop and Cowork
 
-Open Customize > Plugins > Add > Add marketplace, enter `legaldatahunter/skills`, then add the Legal Data Hunter plugin. Plugins saved to your account are available in chat, Cowork and Claude Code. To add only the connector, use the [Claude directory listing](https://claude.ai/directory/a38cc6ae-c7fb-4136-b50e-cf49a4ded4b3).
+Connector: use the [Claude directory listing](https://claude.ai/directory/a38cc6ae-c7fb-4136-b50e-cf49a4ded4b3), or add it as a custom connector. Open Customize > Connectors > Add > Add custom connector, enter the name `Legal Data Hunter` and the URL `https://legaldatahunter.com/mcp`, click Continue, then sign in. On Team and Enterprise plans, an Owner adds the connector under Organization settings > Connectors, then members connect it under Customize > Connectors.
+
+Skills: zip each skill folder so that the folder itself is at the top level of the zip. For example, from where you cloned the repo:
+
+```bash
+cd skills/skills
+zip -r legal-research.zip legal-research/
+```
+
+Upload the zip in Customize > Skills and turn the skill on. Skills enabled on your claude.ai account are also used in Cowork. Personal skills in `~/.claude/skills` are not loaded in Cowork, so upload them there too.
 
 ### Codex
 
@@ -105,15 +119,12 @@ gh skill install legaldatahunter/skills --all --agent <agent>
 ## Repo layout
 
 ```
-.claude-plugin/
-  plugin.json          Claude Code plugin manifest
-  marketplace.json     Claude Code marketplace catalog
-.mcp.json              MCP server config bundled with the plugin
 skills/<name>/
   SKILL.md             The skill (Agent Skills format)
   agents/openai.yaml   Codex metadata and MCP dependency
   references/          Extra material loaded on demand (legal-research)
-assets/logo.svg
+LICENSE                MIT license
+README.md
 ```
 
 ## Disclaimer
