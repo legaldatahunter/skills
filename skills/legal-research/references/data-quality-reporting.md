@@ -2,78 +2,97 @@
 
 > load: on-demand
 
-## Data Gap Protocol
+Every report filed with `report_source_issue` is read by an automated reviewer.
+It re-runs what you describe against Legal Data Hunter and files the problem
+with the team that owns it. A report it can reproduce gets fixed, often within
+days. A vague report cannot be checked and is set aside. **One precise report
+is worth more than ten vague ones.**
 
-The Legal Data Hunter is a growing platform — data improves daily. When you encounter gaps, filing an issue helps the platform improve for everyone. This is part of the research workflow, not an afterthought.
+## When to file
 
-### When to file an issue
+File a report when you have **checked** a concrete problem:
 
-File a `report_source_issue` when:
+- **A specific document is missing.** You know it exists (a named act, article
+  or decision) and neither `resolve_reference` nor `search` finds it.
+- **Search misses documents it should find**, or returns clearly wrong ones
+  (mis-indexed source, wrong court, legislation returned as case law).
+- **Document text is outdated, cut off or garbled.** An old version is served
+  as current, the text stops mid-way, or it is in the wrong language.
+- **A document URL is broken** (404, or it opens a different document).
+- **Wrong metadata** (date, court, document type) on a specific document.
+- **An official source is not covered at all**: a court, gazette or
+  legislature that `discover_sources` does not list.
 
-- **A jurisdiction you searched has zero or very few results** on a topic where you'd expect significant case law or legislation. Issue type: `"data_quality"`.
-- **A document URL returned by the API is broken** (404, redirect to wrong page). Issue type: `"invalid_url"`.
-- **Search results are clearly mis-indexed** — e.g., a German decision appearing under French sources, or a case law result that's actually legislation. Issue type: `"indexing"`.
-- **A known important source is missing entirely** — e.g., you know a country's constitutional court should be indexed but `discover_sources` doesn't list it. Issue type: `"unavailable"`.
-- **Document text is garbled, truncated, or in the wrong language**. Issue type: `"data_quality"`.
+Do **not** file:
 
-### How to file
+- Unofficial material: academic commentary, practitioner articles, textbooks,
+  benchmark or exam datasets. Legal Data Hunter covers official legislation,
+  case law and official doctrine only.
+- A topic search that is merely thin, without a specific document you expected.
+- Anything you have not checked with the steps below.
 
-Use `report_source_issue` with:
-- `source`: The source identifier (e.g., `"DE/BVerfG"`, `"FR/Judilibre"`). Use `discover_sources` to find valid source identifiers.
-- `issue_type`: One of `"unavailable"`, `"indexing"`, `"invalid_url"`, `"data_quality"`, `"other"`.
-- `description`: Be specific. Include the query you ran, what you expected to find, and what you actually got (or didn't get). Example: `"Searched for 'unfair dismissal' in UK case law with court_tier=1 and date_start=2020-01-01. Expected Employment Tribunal and EAT decisions but got 0 results. The UK/Bailii source shows 48,000+ documents so coverage should exist for this topic."`.
+Suggestions about the tools themselves (a confusing parameter, a missing
+field) are welcome but should be rare: at most one per task, with
+`issue_type="other"`.
 
-### How to report to the user
+## Before you file
 
-When you encounter a data gap during research, tell the user transparently:
+1. **Retry once properly.** For a citation, call `resolve_reference` again with
+   `hint_country` and `hint_type`. For a search, use the source's language and
+   the filters from `get_filters`.
+2. **Cross-check with the other tool.** If `resolve_reference` failed, try
+   `search` for the same document, and the other way round. Say in the report
+   whether the other tool found it: this tells the team whether the document is
+   missing from our data or only the lookup is broken.
+3. **Find the exact source ID** with `discover_sources` (e.g. `"FR/LegifranceCodes"`,
+   `"DE/BVerfG"`). Use a bare country code (`"FR"`) only when no source fits,
+   such as a source we do not have at all.
 
-> **Data gap noted**: [Country/Source] returned limited results for [topic]. I've filed an issue with the platform (issue type: [type]). The platform's coverage improves daily, so this may be resolved soon. In the meantime, [alternative approach — e.g., "I've supplemented with web search for doctrinal commentary" or "the analysis for this jurisdiction relies on legislation only"].
+## How to file
 
-Never silently skip a jurisdiction because of missing data. Always flag the gap, file the issue, and explain what you did instead.
+- **One problem per report.** If you hit two (say, a missing decision and a
+  broken URL), file two reports.
+- `source`: the exact source ID from `discover_sources`.
+- `issue_type`: `"unavailable"` (missing document or source), `"indexing"`
+  (search finds the wrong thing or misses it), `"invalid_url"`, `"data_quality"`
+  (outdated, truncated or garbled text; wrong metadata), `"other"`.
+- `description`: use this template. Keep every line short and factual.
 
-## Feedback Protocol — Aggressive Quality Signaling
+```
+Tool call: <the exact call, with all parameters>
+Expected: <the specific document: title, number / ECLI / CELEX, date, and why it should be there>
+Got: <zero results / the ids actually returned / the error message>
+Also tried: <the retry and the cross-check above, and what each returned>
+Official link: <where the document exists on the official site, if you know it>
+```
 
-The Legal Data Hunter is a commercial product with a feedback loop. **Use it aggressively.** Filing feedback is cheap (free API call), but the signal is high-value for product improvement. You should be filing feedback far more often than feels comfortable — err heavily on the side of filing.
+**Good:**
 
-### What to flag (beyond data gaps)
+```
+Tool call: resolve_reference("Article D1152-1 Code de la santé publique", hint_country="FR", hint_type="legislation")
+Expected: Article D1152-1 of the Code de la santé publique, created by décret n° 2026-1043 of 12 Nov 2026, in force since 15 Nov 2026.
+Got: resolved=false, match_type=not_found.
+Also tried: search("D1152-1 Code de la santé publique", source=["FR/LegifranceCodes"]) returned only older D1151-* articles.
+Official link: the article's page on legifrance.gouv.fr (copy the real URL; never build one)
+```
 
-File `report_source_issue` or use the feedback mechanism for **any** of the following:
+**Bad:** `"Some health code articles are missing."`
 
-**Data quality issues:**
-- Zero results where results are expected
-- Results that are clearly off-topic or mis-indexed
-- Broken/dead document URLs
-- Truncated or garbled document text
-- Wrong language for the indexed source
-- Duplicate documents in search results
-- Date fields that look wrong (e.g., 1970-01-01 placeholder dates)
+For **outdated text**, add the version you were served (its date or a short
+quote of the old wording) and the date the current version took effect.
 
-**Tool design issues (flag these explicitly):**
-- A parameter that's confusing or underdocumented — e.g., `alpha` behavior is not self-explanatory
-- A tool that requires two calls where one would do — e.g., needing `discover_sources` before `search` just to learn the language of a source
-- Search results that include fields with no documentation (what does `score` mean? how is it normalized?)
-- Error messages that don't tell you what went wrong or how to fix it
-- A tool that would be significantly more useful with a small addition — e.g., `search` returning a `url` field inconsistently
+**Never include client or matter details**: names of people or companies
+you act for, facts of a case, internal references. Describe only the legal
+source and the tool behaviour. Reports containing personal data are not
+reviewed.
 
-**Workflow inefficiencies:**
-- Having to call 3 tools to accomplish what should be 1 (e.g., discover → filter → search for a simple query)
-- Rate limiting or latency that degrades the multi-jurisdictional parallel search workflow
-- A common research pattern (adversarial search, temporal check) that could be exposed as a built-in tool parameter
+## How to tell the user
 
-### How to frame feedback
+When a gap affects your answer, say so plainly:
 
-Be specific and direct. Good feedback is actionable. Bad feedback is vague.
+> **Data gap noted**: [source] does not have [document]. I've reported it to
+> Legal Data Hunter. In the meantime, [what you did instead, e.g. "I verified
+> the text on Légifrance directly"].
 
-**Good**: `"The 'search' tool returns a 'url' field for ~60% of results and omits it for the rest, with no indication of why. This forces a fallback to 'get_document' for every result just to check if a URL exists — a significant overhead. Either always return the URL or add a 'has_url' boolean so the caller can decide whether to fetch."`
-
-**Bad**: `"Some results don't have URLs."`
-
-Always include:
-- What you were trying to do
-- What you expected to happen
-- What actually happened
-- Concrete suggestion if you have one
-
-### Frequency
-
-If you complete a multi-jurisdictional research task without filing at least one piece of feedback, ask yourself whether you were paying attention. On any non-trivial query across 3+ jurisdictions, you will encounter something worth flagging. The platform is actively developed — your signal matters and reaches the team directly.
+Never silently skip a jurisdiction because of missing data. Flag the gap,
+report it if it meets the bar above, and explain what you did instead.

@@ -31,12 +31,12 @@ This is the single most important rule in the citation workflow. Legal database 
 
 3. **If `resolve_reference` fails**, fall back to Legal Data Hunter `search` with a targeted query. You may then consult reliable external sources, prioritizing official sources, and clearly distinguish those links from LDH-verified results. If no reliable source can be verified, cite in plain text without a hyperlink.
 
-4. **ALWAYS file feedback when a reference fails to resolve** (see `references/data-quality-reporting.md` in the legal-research skill for full guidance). If `resolve_reference` returns `resolved: false` for a well-known legal reference (treaty articles, landmark cases, major regulations), this is a data gap that should be reported. Call `report_source_issue` with:
-   - `source`: The most likely source (e.g., `"EU/EUR-Lex"` for EU legislation, `"EU/CURIA"` for CJEU cases, `"FR/Judilibre"` for French case law)
-   - `issue_type`: `"data_quality"`
-   - `description`: Include the exact `resolve_reference` call that failed and explain why this reference should be resolvable (e.g., "Article 49 TFEU is one of the most cited provisions in EU law and should be individually indexed and linkable").
+4. **Report a reference that should resolve and does not** (full guidance and template: `references/data-quality-reporting.md` in the legal-research skill). When `resolve_reference` returns `resolved: false` for an official reference (treaty article, statute article, reported decision) even with `hint_country` and `hint_type`, and you have checked whether `search` finds it, call `report_source_issue` once with:
+   - `source`: the exact source ID from `discover_sources` (e.g., `"EU/EUR-Lex"`, `"EU/CURIA"`, `"FR/Judilibre"`)
+   - `issue_type`: `"unavailable"` if neither `resolve_reference` nor `search` finds the document, `"indexing"` if `search` finds it but `resolve_reference` does not
+   - `description`: the template — exact failed call, the document expected, what came back, whether `search` found it, and the official link if you have it.
 
-   This feedback loop is critical — the platform improves based on these reports, and filing them ensures that the next researcher won't hit the same gap.
+   These reports are checked automatically and routed to the team that fixes them; a precise report is usually fixed, a vague one is set aside.
 
 5. **FORBIDDEN**: Fabricating a URL by guessing the identifier format. Never construct a URL like `https://eur-lex.europa.eu/...CELEX:someGuessedId`. Never point a treaty article link to a case URL. Never reuse a URL from one document for a different document, and never present an external link as if LDH returned it.
 
