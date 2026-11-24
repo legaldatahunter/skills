@@ -6,7 +6,7 @@ allowed-tools: Bash Read Write
 
 # Install Legal Data Hunter
 
-Install the Legal Data Hunter MCP server and verify the connection. Legal Data Hunter provides access to 38M+ legal documents across 230+ jurisdictions (case law, legislation, and official doctrine) via hybrid semantic + keyword search. The endpoint is `https://legaldatahunter.com/mcp` (Streamable HTTP).
+Install the Legal Data Hunter MCP server and verify the connection. Legal Data Hunter provides access to 86M+ legal documents across 230+ jurisdictions (case law, legislation, and official doctrine) via hybrid semantic + keyword search. The endpoint is `https://legaldatahunter.com/mcp` (Streamable HTTP).
 
 ## Step 1: Detect environment and install
 

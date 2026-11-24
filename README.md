@@ -1,6 +1,6 @@
 # Legal Data Hunter skills
 
-Open-source legal research skills for AI agents that use the [Legal Data Hunter](https://legaldatahunter.com) MCP. The MCP searches official law from 230+ jurisdictions and 38M+ documents (legislation, case law, official doctrine), and every result links to the official text. Citation resolution covers 55+ countries. The skills teach the agent how to research, cite and structure legal work with it.
+Open-source legal research skills for AI agents that use the [Legal Data Hunter](https://legaldatahunter.com) MCP. The MCP searches official law from 230+ jurisdictions and 86M+ documents (legislation, case law, official doctrine), and every result links to the official text. Citation resolution covers 55+ countries. The skills teach the agent how to research, cite and structure legal work with it.
 
 ## Skills
 

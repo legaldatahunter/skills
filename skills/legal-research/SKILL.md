@@ -1,6 +1,6 @@
 ---
 name: legal-research
-description: Orchestrates legal research with the Legal Data Hunter MCP (230+ jurisdictions, 38M+ documents) — statutes, case law, official doctrine, single-jurisdiction or broad multi-jurisdiction questions, regulatory topics such as GDPR enforcement, and memo-style answers with verified inline citations. Use as the default for general legal research questions; sibling skills handle side-by-side comparisons, single-citation lookups, risk scoring, and enumerated multi-issue memos.
+description: Orchestrates legal research with the Legal Data Hunter MCP (230+ jurisdictions, 86M+ documents) — statutes, case law, official doctrine, single-jurisdiction or broad multi-jurisdiction questions, regulatory topics such as GDPR enforcement, and memo-style answers with verified inline citations. Use as the default for general legal research questions; sibling skills handle side-by-side comparisons, single-citation lookups, risk scoring, and enumerated multi-issue memos.
 ---
 
 # Legal Research (Multi-Jurisdictional)
@@ -27,7 +27,7 @@ The output format is **free form**. Adapt your response to whatever structure be
 
 ## Legal Data Hunter MCP — tools
 
-The Legal Data Hunter MCP provides access to 38M+ legal documents across 230+ jurisdictions (1,700+ sources), covering case law, legislation, and doctrine.
+The Legal Data Hunter MCP provides access to 86M+ legal documents across 230+ jurisdictions (1,700+ sources), covering case law, legislation, and doctrine.
 
 | Tool | Purpose |
 |------|---------|
