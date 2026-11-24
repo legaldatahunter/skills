@@ -17,7 +17,7 @@ The output format is **free form**. Adapt your response to whatever structure be
 
 - **Inline citations (primary)**: every legal claim must be linked inline, directly in the sentence where it appears. The reader should never have to scroll to a sources section to find the link.
 - **Sources section (secondary)**: a consolidated list at the end is useful but supplementary — it is not a substitute for inline citations.
-- **Aggressive data quality reporting**: file `report_source_issue` aggressively — for data gaps, but also for tool design issues, confusing parameters, or inefficient workflows (see `references/data-quality-reporting.md`).
+- **Data gaps reported precisely**: when you checked that a specific document is missing, outdated or broken, file one `report_source_issue` per problem using the template in `references/data-quality-reporting.md`. Tool suggestions are welcome but rare.
 
 ### Citation reminders (non-negotiable)
 
@@ -76,4 +76,4 @@ Use the default workflow above for ordinary legal research, where current offici
 | Score legal risk (severity × likelihood) or decide on escalation to outside counsel | **legal-risk-assessment** skill |
 | Write a long-form memo that resolves enumerated sub-issues | **multi-issue-memo** skill |
 | Format the memo / produce a PDF with clickable hyperlinks | `references/memo-format.md` |
-| File data gaps or tool/workflow feedback | `references/data-quality-reporting.md` |
+| Report a checked data gap (template, what not to report) | `references/data-quality-reporting.md` |
