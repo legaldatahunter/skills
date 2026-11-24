@@ -2,7 +2,7 @@
 
 > load: on-demand
 
-The Legal Data Hunter MCP provides access to 38M+ legal documents across 230+ jurisdictions (1,700+ sources). It covers case law, legislation, and doctrine. Use these tools for single-jurisdiction and multi-jurisdictional research alike.
+The Legal Data Hunter MCP provides access to 86M+ legal documents across 230+ jurisdictions (1,700+ sources). It covers case law, legislation, and doctrine. Use these tools for single-jurisdiction and multi-jurisdictional research alike.
 
 ## Core tools
 
